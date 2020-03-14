@@ -1,0 +1,2 @@
+nmap -sV -Pn -n <IP_range>
+nmap -sn -n <IP>
