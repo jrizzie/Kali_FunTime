@@ -25,7 +25,7 @@ Idea #1:
 	#> set LHOST 10.0.0.20
 	#> set LPORT 2960
 	
-5) Click bait and cross fingers?
+5) Click bait and "/exploit" and cross fingers...?
  	
     Kali-VM			  UbUntu-VM			  Windows10-VM
   My attack VM 			 compromised Web-Srvr		  <TARGET>
