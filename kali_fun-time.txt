@@ -1,3 +1,25 @@
+Help:  
+
+How to get access to <TARGET> and make it look like normal web traffic going to "compromised web-server"
+Idea #1:
+	- MSFvenom (reverse-
+ 
+    Kali-VM			  UbUntu-VM			  Windows10-VM
+  My attack VM 			 compromised Web-Srvr		  <TARGET>
+ _______________		 _______________		 _______________
+|		|		|		|		|		|
+|		|		|		|		|		|
+|		|		|		|		|		|
+|		|		|		|		|		|
+|_______________|		|_______________|		|_______________|
+   10.0.0.20			     10.0.0.30			     10.0.0.40
+- kali 				- ubuntu			- user
+- password			- password			- password
+
+
+============================================================================================================
+
+
 ---------------------------
          LABS             |
 __________________________|
