@@ -18,6 +18,8 @@ Idea #1:
 	
 * I think this will forward all traffic going to 10.0.0.30:5959 --> to my Kali (10.0.0.20:2960)  *
 	
+Idea #2 use netcat listeners instead of ssh tunnel 
+
 4) Await connection via Kali-msfconsole-multi/stage/handler
    From: kali [msfconsole]--
    	#> use exploit/multi/handler
