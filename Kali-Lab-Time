@@ -29,15 +29,15 @@ Idea #2 use netcat listeners instead of ssh tunnel
 	
 5) Click bait and "/exploit" and cross fingers...?
  	
-    Kali-VM			                UbUntu-VM			                  Windows10-VM
-  My attack VM 			        compromised Web-Srvr		              <TARGET>
- _______________		          _______________		               _______________
-|		            |		         | <click-bait>	 |		            |		            | 
-|	              |		         |               |                |               |
-|		            |		         |		           |		            |		            |  
-|   		        |            |               |                |               |
-|_______________|		         |_______________|		            |_______________|
-   10.0.0.20			                10.0.0.30			                  10.0.0.40
+    Kali-VM			             UbUntu-VM			   	  Windows10-VM
+  My attack VM 			        compromised Web-Srvr		            <TARGET>
+ _______________		          _______________		         _______________
+|		|		         | <click-bait>	 |		        |		| 
+|	        |		         |               |                	|               |
+|		|		         |		 |		        |		|  
+|   		|            		 |               |                      |     		|
+|_______________|		         |_______________|		        |_______________|
+   10.0.0.20			             10.0.0.30			     	    10.0.0.40
 - kali 				- ubuntu			-                                           
 
 
