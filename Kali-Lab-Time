@@ -16,7 +16,8 @@ Kali-lab test:
 - Using the scenario above (^), we will leverage a compromised web server (Ubuntu) to connect to the victim (Windows user).
 - The end result lab scenario is shown below.
 
-- Simulated:  A Windows-10 user (10.0.0.40) will go to the Ubuntu web server and download a malicious payload (evil.exe).  The malicious payload will call back to our Kali machine, THROUGH the Ubuntu web server.
+- Simulated:  A Windows-10 user (10.0.0.40) will go to the Ubuntu web server and download a malicious payload (evil.exe).  
+The malicious payload will call back to our Kali machine, THROUGH the Ubuntu web server.
 
 -- we want the traffic to route back through the ubuntu server as to look like normal web traffic (port 8080).
 
